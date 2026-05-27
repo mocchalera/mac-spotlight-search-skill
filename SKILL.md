@@ -13,12 +13,13 @@ Spotlight is a fast candidate finder, not a source of truth. Use it to narrow pa
 
 ## Default Workflow
 
-1. Start with `mdfind` when the search may span many folders or the whole Mac.
-2. Prefer scoped searches with `-onlyin` when you know the likely root.
-3. Limit output early with `head` or a small loop; do not dump thousands of paths into context.
-4. Inspect metadata with `mdls` before opening large or private-looking files.
-5. Verify the exact file content or filename with a direct tool before citing results.
-6. Fall back to `rg`, `find`, app indexes, or manual inspection if Spotlight returns nothing or appears stale.
+1. Confirm the user intent and likely search scope before broad local-file discovery.
+2. Start with `mdfind` when the search may span many folders or the whole Mac.
+3. Prefer scoped searches with `-onlyin` when you know the likely root.
+4. Limit output early with `head` or a small loop; do not dump thousands of paths into context.
+5. Inspect metadata with `mdls` before opening large or private-looking files.
+6. Verify the exact file content or filename with a direct tool before citing results.
+7. Fall back to `rg`, `find`, app indexes, or manual inspection if Spotlight returns nothing or appears stale.
 
 ## Commands
 
@@ -83,6 +84,8 @@ mdutil -s "$HOME/Documents"
 
 ## Safety and Privacy
 
+- Prefer `mdfind -onlyin <directory>` over whole-home searches unless the user explicitly asks for a broad search.
+- Treat paths returned by Spotlight as candidates, not authorization to read file contents.
 - Do not open or summarize sensitive-looking files unless the user asked for that category or the file is clearly task-relevant.
 - Show candidate paths and ask before reading private categories such as finances, medical, identity documents, credentials, personal messages, or legal files when the user's intent is ambiguous.
 - Do not run `sudo mdutil`, rebuild indexes, or change Spotlight privacy settings unless the user explicitly asks.

@@ -4,6 +4,21 @@ Use macOS Spotlight from AI coding agents.
 
 This skill teaches agents to use `mdfind`, `mdls`, and `mdutil` as a fast candidate-finding layer for local Mac files before falling back to slower scans such as `rg` or `find`.
 
+## Security First
+
+This repository contains instructions only. It does not install a daemon, run a server, grant new permissions, or send local data anywhere by itself.
+
+However, using this skill with an AI agent can make local file discovery much more efficient. Treat that as a security-sensitive capability:
+
+- Use it only with explicit user intent for the current task.
+- Prefer scoped searches with `mdfind -onlyin <directory>` instead of searching the whole home directory by default.
+- Treat Spotlight results as candidate paths, not permission to open the files.
+- Show candidate paths first when results may include private material.
+- Ask before reading or summarizing financial, legal, medical, identity, credential, personal-message, or other sensitive files.
+- Do not run `sudo mdutil`, rebuild Spotlight indexes, or change Spotlight privacy settings unless the user explicitly asks.
+
+For more detail, see [SECURITY.md](SECURITY.md).
+
 ## What It Is
 
 `mac-spotlight-search` is a lightweight agent skill for finding local documents, PDFs, images, notes, exported mail files, old project assets, and other indexed files on macOS.
@@ -93,6 +108,8 @@ The skill treats Spotlight results as candidates, not truth. Agents should verif
 
 It also asks agents not to open sensitive-looking files unless the user clearly requested that category or the file is directly relevant. This matters for financial, legal, medical, identity, credential, and personal-message material.
 
+Publishing or installing this skill does not grant an agent permission to inspect user files. Permission still comes from the user's prompt, local tool policy, and the agent runtime's sandbox or approval model.
+
 ## Requirements
 
 - macOS
@@ -110,6 +127,21 @@ MIT
 AIコーディングエージェントに、macOSのSpotlight検索を使わせるためのスキルです。
 
 このスキルは、`rg` や `find` のような遅い全探索に入る前に、`mdfind`、`mdls`、`mdutil` を使ってMac内のファイル候補を高速に絞り込む手順をエージェントに教えます。
+
+## セキュリティ優先
+
+このリポジトリに含まれるのは手順書だけです。常駐プロセスやサーバーをインストールしたり、新しい権限を付与したり、ローカルデータを外部送信したりする機能はありません。
+
+ただし、このスキルをAIエージェントと組み合わせると、ローカルファイル探索がかなり効率化されます。これはセキュリティ上注意が必要な能力として扱ってください。
+
+- 現在のタスクについて、ユーザーの明確な意図がある場合だけ使う
+- デフォルトでホームディレクトリ全体を探すのではなく、できるだけ `mdfind -onlyin <directory>` で範囲を絞る
+- Spotlightの結果は候補パスであり、ファイルを開く許可ではない
+- 私的な情報が含まれそうな場合は、まず候補パスだけ提示する
+- 金融、法律、医療、身分証、認証情報、個人的なメッセージなどのファイルは、読む前や要約する前に確認する
+- ユーザーが明示的に求めない限り、`sudo mdutil`、Spotlightインデックス再構築、Spotlightプライバシー設定変更は行わない
+
+詳しくは [SECURITY.md](SECURITY.md) を参照してください。
 
 ## これは何か
 
@@ -199,6 +231,8 @@ Use mac-spotlight-search to locate image assets named logo or app icon across my
 このスキルでは、Spotlightの結果を「候補」として扱います。引用や要約をする前に、エージェントは実ファイルを直接確認する必要があります。
 
 また、金融、法律、医療、身分証、認証情報、個人的なメッセージなど、機微なファイルに見えるものは、ユーザーが明確に求めている場合や作業に直接関係する場合を除き、勝手に開かない方針にしています。
+
+このスキルを公開・インストールしただけでは、エージェントにユーザーのファイルを調べる許可を与えたことにはなりません。許可は、ユーザーのプロンプト、ローカルのツールポリシー、エージェント実行環境のサンドボックスや承認モデルによって決まります。
 
 ## 必要環境
 
