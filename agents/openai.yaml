@@ -1,0 +1,7 @@
+interface:
+  display_name: "Mac Spotlight Search"
+  short_description: "Find local Mac files via Spotlight"
+  default_prompt: "Use $mac-spotlight-search to quickly locate local Mac files with Spotlight before slower scans."
+
+policy:
+  allow_implicit_invocation: true
